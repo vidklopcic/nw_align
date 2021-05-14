@@ -21,7 +21,7 @@ def align(
     :param h_gap_penalty_for_len: for gap in text of length x, min(x, last)-th penalty will be taken from this list
     :param v_gap_penalty_for_len: for gap in probs of length y, min(y, last)-th penalty will be taken from this list
     :param h_penalty_exempt: if equals text[i], do not add the corresp. h_gap_penalty_for_len
-    :return: alignment_score, aligned_probs, aligned_text
+    :return: alignment_score, aligned_text, aligned_probs
     """
 
     def gen_mat():
@@ -62,7 +62,7 @@ def align(
                     len_h_gap = 0
                     lens_v_gap[i_frame] = 0
                 elif p_left >= p_above:
-                    if char == h_penalty_exempt:
+                    if char == h_penalty_exempt or i_char == 0 or i_char == len_text:
                         gap = 0
                     else:
                         i_h_gap = min(len_h_gap, h_gap_penalty_for_len.size - 1)
@@ -87,16 +87,14 @@ def align(
     while trace[i_trace[0], i_trace[1]]:
         dir = trace[i_trace[0], i_trace[1]]
         if dir == DIR_D:
-            traceback_probs.append(list(probs[i_trace[1] - 1]))
+            traceback_probs.append((list(probs[i_trace[1] - 1]), i_trace[0]))
             traceback_text.append((text[i_trace[0] - 1], i_trace[1]))
             i_trace[0] -= 1
             i_trace[1] -= 1
         if dir == DIR_H:
-            traceback_probs.append(list(probs[i_trace[1] - 1]))
-            traceback_text.append(None)
+            traceback_probs.append((list(probs[i_trace[1] - 1]), i_trace[0]))
             i_trace[1] -= 1
         if dir == DIR_V:
-            traceback_probs.append(None)
             traceback_text.append((text[i_trace[0] - 1], i_trace[1]))
             i_trace[0] -= 1
 
