@@ -88,7 +88,7 @@ def align(
         dir = trace[i_trace[0], i_trace[1]]
         if dir == DIR_D:
             traceback_probs.append(list(probs[i_trace[1] - 1]))
-            traceback_text.append(text[i_trace[0] - 1])
+            traceback_text.append((text[i_trace[0] - 1], i_trace[1]))
             i_trace[0] -= 1
             i_trace[1] -= 1
         if dir == DIR_H:

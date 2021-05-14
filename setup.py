@@ -3,13 +3,13 @@ from distutils.core import setup
 setup(
     name='nw-align-probs',
     packages=['nw_align_probs'],
-    version='0.1',
+    version='0.2',
     license='MIT',
     description='Needleman-Wunsch alignment for text to logprobs frames from ASR models',
     author='Vid Klopcic',
     author_email='vid.klopcic@lgm.fri.uni-lj.si',
     url='https://github.com/vidklopcic/nw_align_probs',
-    download_url='https://github.com/vidklopcic/nw_align_probs/archive/refs/tags/v_01.tar.gz',
+    download_url='https://github.com/vidklopcic/nw_align_probs/archive/refs/tags/v_02.tar.gz',
     keywords=['Needleman-Wunsch', 'global alignment', 'ASR text alignment'],
     install_requires=[
         'numpy',
