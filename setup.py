@@ -1,6 +1,5 @@
 import atexit
 import os
-import sys
 from distutils.core import setup
 from setuptools.command.install import install
 
@@ -8,15 +7,12 @@ from setuptools.command.install import install
 class PostInstallCommand(install):
     def run(self):
         def _post_install():
-            def find_module_path():
-                for p in sys.path:
-                    if os.path.isdir(p) and 'nw_align_probs' in os.listdir(p):
-                        return os.path.join(p, 'nw_align_probs')
-
-            install_path = find_module_path()
-            print('compiling pythran module:', install_path)
+            print('compiling pythran module')
             import pythran
-            pythran.compile_pythranfile(os.path.join(install_path, 'nw_align_probs.py'))
+            import nw_align_probs
+            install_path = os.path.join(os.path.dirname(nw_align_probs.__file__))
+            os.chdir(install_path)
+            pythran.compile_pythranfile('nw_align_probs.py')
 
         atexit.register(_post_install)
         install.run(self)
