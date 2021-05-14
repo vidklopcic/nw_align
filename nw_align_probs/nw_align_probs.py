@@ -97,7 +97,7 @@ def align(
             i_trace[1] -= 1
         if dir == DIR_V:
             traceback_probs.append(None)
-            traceback_text.append(text[i_trace[0] - 1])
+            traceback_text.append((text[i_trace[0] - 1], i_trace[1]))
             i_trace[0] -= 1
 
     traceback_text.reverse()
