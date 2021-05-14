@@ -9,7 +9,7 @@ class PostInstallCommand(install):
         print('compiling pythran module')
         import pythran
         import nw_align_probs
-        pythran.compile_pythranfile(os.path.join(nw_align_probs.__file__, 'nw_align_probs.py'))
+        pythran.compile_pythranfile(os.path.join(os.path.dirname(nw_align_probs.__file__), 'nw_align_probs.py'))
 
 
 setup(
