@@ -1,22 +1,9 @@
-import atexit
-import os
 from distutils.core import setup
-from setuptools.command.install import install
+import setuptools
 
+setuptools.dist.Distribution(dict(setup_requires='pythran'))
 
-class PostInstallCommand(install):
-    def run(self):
-        def _post_install():
-            print('compiling pythran module')
-            import pythran
-            import nw_align_probs
-            install_path = os.path.join(os.path.dirname(nw_align_probs.__file__))
-            os.chdir(install_path)
-            pythran.compile_pythranfile('nw_align_probs.py')
-
-        atexit.register(_post_install)
-        install.run(self)
-
+from pythran.dist import PythranExtension, PythranBuildExt
 
 setup(
     name='nw-align-probs',
@@ -44,8 +31,6 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.8',
     ],
-
-    cmdclass={
-        'install': PostInstallCommand,
-    },
+    ext_modules=[PythranExtension("nw_align_probs", ["nw_align_probs/nw_align_probs.py"])],
+    cmdclass={"build_ext": PythranBuildExt}
 )
