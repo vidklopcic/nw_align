@@ -1,5 +1,37 @@
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+*.pyc
+*.pyo
+*.mo
+*.egg-info
+*.egg
+*.EGG
+*.EGG-INFO
+bin
+build
+downloads/*
+eggs/*
+fake-eggs/*
+parts/*
+dist
+.installed.cfg
+.mr.developer.cfg
+.hg
+.bzr
+.svn
+*.tmp*
+*.LCK
+*.lck
+*~
+*.bak
+.coverage
+*.pyd
+*.so
+*.orig
+*.rej
+__minitage__*
+src
+MANIFEST
 
 media
 # User-specific stuff
