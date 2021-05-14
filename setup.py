@@ -1,29 +1,28 @@
 from distutils.core import setup
 
 setup(
-    name='Needleman-Wunsch alignment',  # How you named your package folder (MyLib)
-    packages=['YOURPACKAGENAME'],  # Chose the same as "name"
-    version='0.1',  # Start with a small number and increase it with every change you make
+    name='nw-align-probs',
+    packages=['nw_align_probs'],
+    version='0.1',
     license='MIT',
     description='Needleman-Wunsch alignment for text to logprobs frames from ASR models',
     author='Vid Klopcic',
     author_email='vid.klopcic@lgm.fri.uni-lj.si',
-    url='https://github.com/user/reponame',  # Provide either the link to your github or to your website
-    download_url='https://github.com/user/reponame/archive/v_01.tar.gz',  # I explain this later on
-    keywords=['SOME', 'MEANINGFULL', 'KEYWORDS'],  # Keywords that define your package best
-    install_requires=[  # I get to this in a second
-        'validators',
-        'beautifulsoup4',
+    url='https://github.com/vidklopcic/nw_align',
+    download_url='https://github.com/vidklopcic/nw_align/archive/v_01.tar.gz',
+    keywords=['Needleman-Wunsch', 'global alignment', 'ASR text alignment'],
+    install_requires=[
+        'numpy',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
-        # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
-        'Intended Audience :: Developers',  # Define that your audience are developers
-        'Topic :: Software Development :: Build Tools',
-        'License :: OSI Approved :: MIT License',  # Again, pick a license
-        'Programming Language :: Python :: 3',  # Specify which pyhton versions that you want to support
+        'Intended Audience :: Science/Research',
+        'Topic :: Text Processing',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.8',
     ],
 )
