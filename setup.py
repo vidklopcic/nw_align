@@ -8,8 +8,8 @@ setup(
     description='Needleman-Wunsch alignment for text to logprobs frames from ASR models',
     author='Vid Klopcic',
     author_email='vid.klopcic@lgm.fri.uni-lj.si',
-    url='https://github.com/vidklopcic/nw_align',
-    download_url='https://github.com/vidklopcic/nw_align/archive/v_01.tar.gz',
+    url='https://github.com/vidklopcic/nw_align_probs',
+    download_url='https://github.com/vidklopcic/nw_align_probs/archive/refs/tags/v_01.tar.gz',
     keywords=['Needleman-Wunsch', 'global alignment', 'ASR text alignment'],
     install_requires=[
         'numpy',
