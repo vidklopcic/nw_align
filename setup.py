@@ -1,7 +1,7 @@
 from distutils.core import setup
-import setuptools
+import pip
 
-setuptools.dist.Distribution(dict(setup_requires='pythran'))
+pip.main(['install', 'pythran'])
 
 from pythran.dist import PythranExtension, PythranBuildExt
 
