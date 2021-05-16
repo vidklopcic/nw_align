@@ -1,6 +1,7 @@
 from setuptools import setup, find_packages, dist
+import pip
 
-dist.Distribution(dict(setup_requires='pythran'))
+pip.main(['install', 'pythran'])
 
 from pythran import PythranExtension
 
@@ -8,13 +9,13 @@ setup(
     name='nw-align-probs',
     packages=find_packages('nw_align_probs'),
     package_dir={'': 'nw_align_probs'},
-    version='0.3',
+    version='0.4',
     license='MIT',
     description='Needleman-Wunsch alignment for text to logprobs frames from ASR models',
     author='Vid Klopcic',
     author_email='vid.klopcic@lgm.fri.uni-lj.si',
     url='https://github.com/vidklopcic/nw_align_probs',
-    download_url='https://github.com/vidklopcic/nw_align_probs/archive/refs/tags/v_03.tar.gz',
+    download_url='https://github.com/vidklopcic/nw_align_probs/archive/refs/tags/v_04.tar.gz',
     keywords=['Needleman-Wunsch', 'global alignment', 'ASR text alignment'],
     install_requires=[
         'numpy',
