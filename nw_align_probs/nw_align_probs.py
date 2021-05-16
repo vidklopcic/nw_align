@@ -84,61 +84,11 @@ def align(
     :return: alignment_score, aligned_text, aligned_probs
     """
 
-    def gen_mat():
-        len_text = text.shape[0]
-        len_probs = probs.shape[0]
-        lens_v_gap = np.zeros(len_probs + 1, dtype=np.int32)
-
-        # initialize score matrix
-        m_score = np.zeros((len_text + 1, len_probs + 1))
-        for i_char in range(1, len_text + 1):
-            i_v_gap = min(i_char - 1, v_gap_penalty_for_len.size - 1)
-            m_score[i_char, 0] = m_score[i_char - 1, 0] + v_gap_penalty_for_len[i_v_gap]
-
-        for i_frame in range(1, len_probs + 1):
-            i_h_gap = min(i_frame - 1, h_gap_penalty_for_len.size - 1)
-            m_score[0, i_frame] = m_score[0, i_frame - 1] + h_gap_penalty_for_len[i_h_gap]
-
-        # initialize trace matrix
-        m_trace = np.zeros((len_text + 1, len_probs + 1), dtype=np.int8)
-        m_trace[0] = [DIR_H] * (len_probs + 1)
-        m_trace[:, 0] = [DIR_V] * (len_text + 1)
-        m_trace[0, 0] = 0
-
-        for i_char in range(1, len_text + 1):
-            len_h_gap = 0
-            for i_frame in range(1, len_probs + 1):
-                char = text[i_char - 1]
-                p_char = probs[i_frame - 1][char]
-                p_above = m_score[i_char - 1][i_frame]
-                p_left = m_score[i_char][i_frame - 1]
-                p_diag = m_score[i_char - 1][i_frame - 1]
-                len_v_gap = lens_v_gap[i_frame - 1]
-
-                if p_left <= p_diag >= p_above:
-                    m_score[i_char][i_frame] = p_diag + p_char
-                    m_trace[i_char][i_frame] = DIR_D
-                    len_h_gap = 0
-                    lens_v_gap[i_frame] = 0
-                elif p_left >= p_above:
-                    if char == h_penalty_exempt or i_char == 0 or i_char == len_text:
-                        gap = 0
-                    else:
-                        i_h_gap = min(len_h_gap, h_gap_penalty_for_len.size - 1)
-                        gap = h_gap_penalty_for_len[i_h_gap]
-                    m_score[i_char][i_frame] = p_left + gap
-                    m_trace[i_char][i_frame] = DIR_H
-                    len_h_gap += 1
-                    lens_v_gap[i_frame] = 0
-                else:
-                    i_v_gap = min(len_v_gap, v_gap_penalty_for_len.size - 1)
-                    m_score[i_char][i_frame] = p_above + v_gap_penalty_for_len[i_v_gap]
-                    m_trace[i_char][i_frame] = DIR_V
-                    lens_v_gap[i_frame] = len_v_gap + 1
-                    len_h_gap = 0
-        return m_score, m_trace
-
-    score, trace = gen_mat()
+    score, trace = gen_mat(probs,
+                           text,
+                           h_gap_penalty_for_len,
+                           v_gap_penalty_for_len,
+                           h_penalty_exempt)
 
     traceback_probs = []
     traceback_text = []
