@@ -67,14 +67,14 @@ def gen_mat(probs: np.ndarray,
     return m_score, m_trace
 
 
-# pythran export align(float[:,:], int[], float[], float[], int)
+# pythran export align(float[:,:], int[], float[], float[], int, bool)
 def align(
         probs: np.ndarray,
         text: np.ndarray,
         h_gap_penalty_for_len: np.ndarray,
         v_gap_penalty_for_len: np.ndarray,
-        h_penalty_exempt=None
-):
+        h_penalty_exempt=None,
+        init_h_gap=False):
     """
     Implementation of Needleman-Wunsch intended for alignment of text to the raw output from ASR models.
 
@@ -83,6 +83,7 @@ def align(
     :param h_gap_penalty_for_len: for gap in text of length x, min(x, last)-th penalty will be taken from this list
     :param v_gap_penalty_for_len: for gap in probs of length y, min(y, last)-th penalty will be taken from this list
     :param h_penalty_exempt: if equals text[i], do not add the corresp. h_gap_penalty_for_len
+    :param init_h_gap: if False, first row won't be affected by the h_gap_penalty_for_len
     :return: alignment_score, aligned_text, aligned_probs
     """
 
