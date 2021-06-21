@@ -5,12 +5,13 @@ DIR_H = 2
 DIR_V = 3
 
 
-# pythran export gen_mat(float[:,:], int[], float[], float[], int)
+# pythran export gen_mat(float[:,:], int[], float[], float[], int, bool)
 def gen_mat(probs: np.ndarray,
             text: np.ndarray,
             h_gap_penalty_for_len: np.ndarray,
             v_gap_penalty_for_len: np.ndarray,
-            h_penalty_exempt=None):
+            h_penalty_exempt=None,
+            init_h_gap=False):
     len_text = text.shape[0]
     len_probs = probs.shape[0]
     lens_v_gap = np.zeros(len_probs + 1, dtype=np.int32)
@@ -21,9 +22,10 @@ def gen_mat(probs: np.ndarray,
         i_v_gap = min(i_char - 1, v_gap_penalty_for_len.size - 1)
         m_score[i_char, 0] = m_score[i_char - 1, 0] + v_gap_penalty_for_len[i_v_gap]
 
-    for i_frame in range(1, len_probs + 1):
-        i_h_gap = min(i_frame - 1, h_gap_penalty_for_len.size - 1)
-        m_score[0, i_frame] = m_score[0, i_frame - 1] + h_gap_penalty_for_len[i_h_gap]
+    if init_h_gap:
+        for i_frame in range(1, len_probs + 1):
+            i_h_gap = min(i_frame - 1, h_gap_penalty_for_len.size - 1)
+            m_score[0, i_frame] = m_score[0, i_frame - 1] + h_gap_penalty_for_len[i_h_gap]
 
     # initialize trace matrix
     m_trace = np.zeros((len_text + 1, len_probs + 1), dtype=np.int8)
