@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages, dist
 import pip
 
-pip.main(['install', 'pythran'])
+pip.main(['install', 'pythran==0.9.11'])
 
 from pythran import PythranExtension
 
